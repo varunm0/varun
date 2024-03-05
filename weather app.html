@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="weatherApp">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Real-time Weather App</title>
+ <style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+  }
+  
+  h1 {
+    text-align: center;
+  }
+  
+  .weather {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin: 20px auto;
+    max-width: 300px;
+  }
+  
+  .location {
+    font-size: 24px;
+    font-weight: bold;
+  }
+  
+  .temperature {
+    font-size: 48px;
+    margin: 10px 0;
+  }
+  
+  .description {
+    font-size: 18px;
+  }
+  
+ </style>
+</head>
+<body>
+  <div ng-controller="WeatherController as weatherCtrl">
+    <h1>Real-time Weather App</h1>
+    <div class="weather">
+      <div class="location">{{ weatherCtrl.location }}</div>
+      <div class="temperature">{{ weatherCtrl.temperature }}°C</div>
+      <div class="description">{{ weatherCtrl.description }}</div>
+    </div>
+  </div>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+  <script>
+    angular.module('weatherApp', [])
+  .controller('WeatherController', function($scope, $http) {
+    var weatherCtrl = this;
+
+    // Example API URL (replace with your own API URL)
+    var apiUrl = 'https://api.openweathermap.org/data/2.5/weather?q=London&appid=YOUR_API_KEY&units=metric';
+
+    $http.get(apiUrl)
+      .then(function(response) {
+        weatherCtrl.location = response.data.name;
+        weatherCtrl.temperature = response.data.main.temp;
+        weatherCtrl.description = response.data.weather[0].description;
+      })
+      .catch(function(error) {
+        console.error('Error fetching weather data:', error);
+      });
+  });
+
+  </script>
+</body>
+</html>
