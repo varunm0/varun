@@ -1,0 +1,128 @@
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Task List Manager</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f5f5f5;
+    }
+    
+    .container {
+        max-width: 600px;
+        margin: 20px auto;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 5px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    
+    h1 {
+        text-align: center;
+    }
+    
+    form {
+        margin-bottom: 20px;
+    }
+    
+    input[type="text"] {
+        padding: 8px;
+        width: 70%;
+        border-radius: 3px;
+        border: 1px solid #ccc;
+    }
+    
+    button {
+        padding: 8px 16px;
+        margin-left: 10px;
+        border-radius: 3px;
+        border: none;
+        background-color: #007bff;
+        color: #fff;
+        cursor: pointer;
+    }
+    
+    ul {
+        list-style-type: none;
+        padding: 0;
+    }
+    
+    li {
+        margin-bottom: 10px;
+        padding: 10px;
+        background-color: #f9f9f9;
+        border-radius: 3px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    button {
+        background-color: #dc3545;
+    }
+</style>
+</head>
+<body>
+<div ng-controller="taskController as taskCtrl" class="container">
+    <h1>Task List Manager</h1>
+    <form ng-submit="taskCtrl.addTask()">
+        <input type="text" ng-model="taskCtrl.newTask" placeholder="Add a task..." required>
+        <button type="submit">Add Task</button>
+    </form>
+    <ul>
+        <li ng-repeat="task in taskCtrl.tasks">
+            <span>{{ task }}</span>
+            <button ng-click="taskCtrl.editTask($index)">Edit</button>
+            <button ng-click="taskCtrl.deleteTask($index)">Delete</button>
+        </li>
+    </ul>
+    <div ng-if="taskCtrl.editing">
+        <input type="text" ng-model="taskCtrl.updatedTask" required>
+        <button ng-click="taskCtrl.updateTask()">Update</button>
+    </div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+<script>
+    angular.module('taskApp', [])
+    .controller('taskController', function() {
+        this.tasks = [];
+        this.newTask = '';
+        this.editing = false;
+        this.editIndex = null;
+        this.updatedTask = '';
+    
+        this.addTask = function() {
+            if (this.newTask.trim() !== '') {
+                this.tasks.push(this.newTask.trim());
+                this.newTask = '';
+            }
+        };
+    
+        this.editTask = function(index) {
+            this.editing = true;
+            this.editIndex = index;
+            this.updatedTask = this.tasks[index];
+        };
+    
+        this.updateTask = function() {
+            if (this.updatedTask.trim() !== '') {
+                this.tasks[this.editIndex] = this.updatedTask.trim();
+                this.editing = false;
+                this.editIndex = null;
+                this.updatedTask = '';
+            }
+        };
+    
+        this.deleteTask = function(index) {
+            this.tasks.splice(index, 1);
+        };
+    });
+
+
+
+</script>
+</body>
+</html>
