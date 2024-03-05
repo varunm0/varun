@@ -1,83 +1,49 @@
-var app = angular.module('authApp', ['ngRoute']);
+var app = angular.module('quizApp', ['ngRoute']);
 
 app.config(function ($routeProvider) {
     $routeProvider
         .when('/', {
-            templateUrl: 'login.html',
-            controller: 'LoginController'
-        })
-        .when('/signup', {
-            templateUrl: 'signup.html',
-            controller: 'SignupController'
-        })
-        .when('/dashboard', {
-            templateUrl: 'dashboard.html',
-            controller: 'DashboardController',
-            resolve: {
-                auth: function ($q, $location, AuthService) {
-                    var deferred = $q.defer();
-                    if (AuthService.isAuthenticated()) {
-                        deferred.resolve();
-                    } else {
-                        deferred.reject();
-                        $location.path('/');
-                    }
-                    return deferred.promise;
-                }
-            }
+            templateUrl: 'quiz.html',
+            controller: 'QuizController'
         })
         .otherwise({
             redirectTo: '/'
         });
 });
 
-app.controller('LoginController', function ($scope, $location, AuthService) {
-    $scope.login = function () {
-        // Implement login logic here
-        if (AuthService.login($scope.username, $scope.password)) {
-            $location.path('/dashboard');
-        } else {
-            alert('Invalid credentials');
+app.controller('QuizController', function ($scope) {
+    $scope.questions = [
+        {
+            text: 'What is the capital of France?',
+            answers: [
+                { text: 'London', correct: false },
+                { text: 'Paris', correct: true },
+                { text: 'Berlin', correct: false }
+            ]
+        },
+        {
+            text: 'What is 2 + 2?',
+            answers: [
+                { text: '3', correct: false },
+                { text: '4', correct: true },
+                { text: '5', correct: false }
+            ]
         }
-    };
-});
+    ];
 
-app.controller('SignupController', function ($scope, $location, AuthService) {
-    $scope.signup = function () {
-        // Implement signup logic here
-        AuthService.signup($scope.username, $scope.password);
-        $location.path('/');
-    };
-});
+    $scope.score = 0;
 
-app.controller('DashboardController', function ($scope, AuthService) {
-    $scope.username = AuthService.getUsername();
-});
-
-app.service('AuthService', function () {
-    var isAuthenticated = false;
-    var username = '';
-
-    return {
-        login: function (user, pass) {
-            // Mock authentication, replace with real logic
-            if (user === 'user' && pass === 'password') {
-                isAuthenticated = true;
-                username = user;
-                return true;
-            }
-            return false;
-        },
-        signup: function (user, pass) {
-            // Mock signup logic, replace with real logic
-            // Here you can store the user data in your backend or localStorage
-            console.log('Signed up:', user);
-        },
-        isAuthenticated: function () {
-            return isAuthenticated;
-        },
-        getUsername: function () {
-            return username;
+    $scope.checkAnswer = function (question, answer) {
+        if (answer.correct) {
+            $scope.score++;
         }
+        question.answered = true;
+    };
+
+    $scope.resetQuiz = function () {
+        $scope.questions.forEach(function (question) {
+            question.answered = false;
+        });
+        $scope.score = 0;
     };
 });

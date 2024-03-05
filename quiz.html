@@ -1,0 +1,14 @@
+<div class="container">
+    <h2>Quiz</h2>
+    <div ng-repeat="question in questions">
+        <h3>{{ question.text }}</h3>
+        <ul>
+            <li ng-repeat="answer in question.answers" ng-click="checkAnswer(question, answer)">
+                <input type="radio" ng-model="question.selected" ng-value="answer" ng-disabled="question.answered">
+                {{ answer.text }}
+            </li>
+        </ul>
+    </div>
+    <p>Score: {{ score }} / {{ questions.length }}</p>
+    <button ng-click="resetQuiz()">Reset</button>
+</div>
