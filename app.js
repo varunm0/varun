@@ -1,49 +1,16 @@
-var app = angular.module('quizApp', ['ngRoute']);
+angular.module('productCatalogApp', [])
+    .controller('ProductCatalogController', function() {
+        var catalog = this;
 
-app.config(function ($routeProvider) {
-    $routeProvider
-        .when('/', {
-            templateUrl: 'quiz.html',
-            controller: 'QuizController'
-        })
-        .otherwise({
-            redirectTo: '/'
-        });
-});
+        catalog.categories = ['Electronics', 'Clothing', 'Books'];
 
-app.controller('QuizController', function ($scope) {
-    $scope.questions = [
-        {
-            text: 'What is the capital of France?',
-            answers: [
-                { text: 'London', correct: false },
-                { text: 'Paris', correct: true },
-                { text: 'Berlin', correct: false }
-            ]
-        },
-        {
-            text: 'What is 2 + 2?',
-            answers: [
-                { text: '3', correct: false },
-                { text: '4', correct: true },
-                { text: '5', correct: false }
-            ]
-        }
-    ];
+        catalog.products = [
+            { name: 'Laptop', category: 'Electronics', price: 100000 },
+            { name: 'T-shirt', category: 'Clothing', price: 700 },
+            { name: 'Mobile Phone', category: 'Electronics', price: 300000 },
+            { name: 'Jeans', category: 'Clothing', price: 500 },
+            { name: 'Book', category: 'Books', price: 1500 }
+        ];
 
-    $scope.score = 0;
-
-    $scope.checkAnswer = function (question, answer) {
-        if (answer.correct) {
-            $scope.score++;
-        }
-        question.answered = true;
-    };
-
-    $scope.resetQuiz = function () {
-        $scope.questions.forEach(function (question) {
-            question.answered = false;
-        });
-        $scope.score = 0;
-    };
-});
+        catalog.selectedCategory = '';
+    });

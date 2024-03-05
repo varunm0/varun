@@ -1,54 +1,30 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="quizApp">
+<html lang="en" ng-app="productCatalogApp">
 <head>
     <meta charset="UTF-8">
-    <title>Interactive Quiz Application</title>
+    <title>Product Catalog</title>
     <link rel="stylesheet" href="styles.css">
 </head>
-<body>
-    <div class="container" ng-controller="QuizController">
-        <h1>Interactive Quiz</h1>
-        <div ng-show="quizStarted">
-            <div ng-show="!quizFinished">
-                <div class="question">
-                    <h2>{{ currentQuestion.question }}</h2>
-                    <ul>
-                        <li ng-repeat="option in currentQuestion.options">
-                            <label>
-                                <input type="radio" ng-model="selectedOption" ng-value="option">option 
-                               
-                                
-                            </label>
-                        </li>
-                    </ul>
-                    <button ng-click="nextQuestion()">Next</button>
-                </div>
-            </div>
-            <div class="question"></div>
-            h2>{{ personal question.question }}</h2>
-                    <ul>
-                        <li ng-repeat="option in currentQuestion.options">
-                            <label>
-                                <input type="radio" ng-model="selectedOption" ng-value="option">option 
-                               
-                                
-                            </label>
-                        </li>
-                    </ul>
-                    <button ng-click="nextQuestion()">Next</button>
-                </div>
-            </div>
-
-            <div ng-show="quizFinished">
-                <h2>Quiz Finished!</h2>
-                <p>Your Score:10</p>
-            </div>
+<body ng-controller="ProductCatalogController as catalog">
+    <div class="container">
+        <h1>Product Catalog</h1>
+        <div class="filters">
+            <h2>Filters</h2>
+            <label>Category:</label>
+            <select ng-model="catalog.selectedCategory">
+                <option value="">All</option>
+                <option ng-repeat="category in catalog.categories" value="{{category}}">{{category}}</option>
+            </select>
         </div>
-        <div ng-show="!quizStarted">
-            <button ng-click="startQuiz()">Start Quiz</button>
+        <div class="product-list">
+            <h2>Products</h2>
+            <div class="product" ng-repeat="product in catalog.products | filter: {category: catalog.selectedCategory}">
+                <h3>{{product.name}}</h3>
+                <p>Category: {{product.category}}</p>
+                <p>Price: ${{product.price}}</p>
+            </div>
         </div>
     </div>
-
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
     <script src="app.js"></script>
 </body>
