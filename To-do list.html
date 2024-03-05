@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="todoApp">
+<head>
+  <meta charset="UTF-8">
+  <title>Animated To-Do List</title>
+  <style>
+    .fade {
+        transition: opacity 0.5s ease-in-out;
+      }
+      
+      .fade.ng-enter, .fade.ng-leave {
+        opacity: 0;
+      }
+      
+      .fade.ng-enter.ng-enter-active, .fade.ng-leave {
+        opacity: 1;
+      }
+      
+  </style>
+</head>
+<body>
+  <div ng-controller="TodoController as todoCtrl">
+    <h1>To-Do List</h1>
+    <input type="text" ng-model="todoCtrl.newTask" placeholder="Add a new task">
+    <button ng-click="todoCtrl.addTask()">Add Task</button>
+    <ul>
+      <li ng-repeat="task in todoCtrl.tasks track by $index" class="fade">
+        {{ task }}
+        <button ng-click="todoCtrl.removeTask($index)">Remove</button>
+      </li>
+    </ul>
+  </div>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+  <script>
+    angular.module('todoApp', [])
+  .controller('TodoController', function() {
+    var vm = this;
+    vm.tasks = [];
+
+    vm.addTask = function() {
+      if (vm.newTask.trim() !== '') {
+        vm.tasks.push(vm.newTask);
+        vm.newTask = '';
+      }
+    };
+
+    vm.removeTask = function(index) {
+      vm.tasks.splice(index, 1);
+    };
+  });
+
+  </script>
+</body>
+</html>
