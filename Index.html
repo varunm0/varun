@@ -1,101 +1,15 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="calendarApp">
+<html lang="en" ng-app="authApp">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Responsive Event Calendar</title>
-  <style>
-    body {
-        font-family: Arial, sans-serif;
-        background-color: #f0f0f0;
-        margin: 0;
-        padding: 0;
-      }
-      
-      h1 {
-        text-align: center;
-      }
-      
-      .calendar {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-      }
-      
-      .week {
-        display: flex;
-        flex-wrap: wrap;
-      }
-      
-      .day {
-        width: calc(100% / 7);
-        border: 1px solid #ddd;
-        padding: 10px;
-      }
-      
-      .date {
-        font-weight: bold;
-      }
-      
-      .events {
-        margin-top: 10px;
-      }
-      
-      .event {
-        border: 1px solid #ccc;
-        padding: 5px;
-        margin-bottom: 5px;
-      }
-      
-      @media (min-width: 768px) {
-        .day {
-          width: calc(100% / 7);
-        }
-      }
-      
-      @media (min-width: 992px) {
-        .day {
-          width: calc(100% / 7);
-        }
-      }
-      
-  </style>
+    <meta charset="UTF-8">
+    <title>User Authentication System</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div ng-controller="CalendarController as calendarCtrl">
-    <h1>Event Calendar</h1>
-    <div class="calendar">
-      <div class="week" ng-repeat="week in calendarCtrl.calendar">
-        <div class="day" ng-repeat="day in week">
-          <div class="date">{{ day.date }}</div>
-          <div class="events">
-            <div class="event" ng-repeat="event in day.events">
-              <div class="time">{{ event.time }}</div>
-              <div class="description">{{ event.description }}</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+    <div ng-view></div>
 
-  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
-  <script>
-    angular.module('calendarApp', [])
-  .controller('CalendarController', function() {
-    var calendarCtrl = this;
-
-    // Example calendar data
-    calendarCtrl.calendar = [
-      [
-        { date: '1', events: [{ time: '10:00 AM', description: 'Meeting' }] },
-        { date: '2', events: [] },
-        // Add more days here...
-      ],
-      // Add more weeks here...
-    ];
-  });
-
-  </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular-route.min.js"></script>
+    <script src="app.js"></script>
 </body>
 </html>
