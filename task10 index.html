@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="dashboardApp">
+<head>
+  <meta charset="UTF-8">
+  <title>Dashboard Analytics</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div ng-controller="DashboardController as dashboardCtrl">
+    <h1>Dashboard Analytics</h1>
+    
+    <div class="chart-container">
+      <h2>Monthly Sales</h2>
+      <canvas id="monthlySalesChart"></canvas>
+    </div>
+
+    <div class="chart-container">
+      <h2>Product Distribution</h2>
+      <canvas id="productDistributionChart"></canvas>
+    </div>
+  </div>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
